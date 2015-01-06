@@ -6,12 +6,12 @@
  * descriptors of all vertices with the current LaserScan.
  * The action is done when the dissimilarities are computed.
  * Implemented actions:
- * - GET_VERTEX_DESCRIPTOR: return the LaserScan, the PlaceProfile and the computed Crossing
+ * - GET_VERTEX_DESCRIPTOR: return the LaserScan and the computed Crossing
  * - GET_DISSIMILARITY: return the dissimilarity based on LaserScan
  *
  * Interaction with the map (created by this jockey through lj_laser/jockey.h):
- * - Getter/Setter: VectorLaserScan, jockey_name + "_laser_descriptor"
- * - Setter: Crossing, jockey_name + "_crossing_descriptor"
+ * - Getter/Setter: VectorLaserScan, jockey_name + "_laser"
+ * - Setter: Crossing, jockey_name + "_crossing"
  *
  * Interaction with the map (created by other jockeys):
  * - none
