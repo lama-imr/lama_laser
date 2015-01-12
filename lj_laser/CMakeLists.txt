@@ -84,9 +84,22 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES lj_laser_jockey
-  CATKIN_DEPENDS crossing_detector geometry_msgs lama_common lama_interfaces lama_jockeys lama_msgs roscpp sensor_msgs
+  INCLUDE_DIRS
+  include
+
+  LIBRARIES
+  lj_laser_jockey
+
+  CATKIN_DEPENDS
+  crossing_detector
+  geometry_msgs
+  lama_common
+  lama_interfaces
+  lama_jockeys
+  lama_msgs
+  roscpp
+  sensor_msgs
+
   #  DEPENDS system_lib
 )
 
@@ -110,7 +123,7 @@ add_executable(lj_laser src/lj_laser_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-add_dependencies(lj_laser lama_interfaces_generate_messages_cpp)
+# add_dependencies(lj_laser lama_interfaces_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(lj_laser
@@ -133,18 +146,17 @@ target_link_libraries(lj_laser
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS lj_laser lj_laser_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS lj_laser lj_laser_jockey
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

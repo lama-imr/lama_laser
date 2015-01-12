@@ -5,11 +5,11 @@ project(nj_oa_laser)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-	angles
-	geometry_msgs
-	lama_jockeys
-	roscpp
-	sensor_msgs
+  angles
+  geometry_msgs
+  lama_jockeys
+  roscpp
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -82,10 +82,21 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-	INCLUDE_DIRS include
-	LIBRARIES nj_oa_laser_twist_handler nj_oa_laser_jockey
-	CATKIN_DEPENDS lama_jockeys roscpp sensor_msgs
-	#  DEPENDS system_lib
+  INCLUDE_DIRS
+  include
+
+  LIBRARIES
+  nj_oa_laser_twist_handler
+  nj_oa_laser_jockey
+
+  CATKIN_DEPENDS
+  angles
+  geometry_msgs
+  lama_jockeys
+  roscpp
+  sensor_msgs
+
+  #  DEPENDS system_lib
 )
 
 ###########
@@ -96,9 +107,9 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-	include 
-	${catkin_INCLUDE_DIRS}
-	)
+  include 
+  ${catkin_INCLUDE_DIRS}
+  )
 
 ## Declare a cpp library
 add_library(nj_oa_laser_jockey src/jockey.cpp)
@@ -130,18 +141,17 @@ target_link_libraries(nj_oa_laser nj_oa_laser_jockey ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS nj_oa_laser nj_oa_laser_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS nj_oa_laser nj_oa_laser_jockey nj_oa_laser_twist_handler
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

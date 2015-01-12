@@ -6,8 +6,8 @@ Jockey::Jockey(std::string name, const double frontier_width, const double max_f
   LocalizingJockey(name),
   data_received_(false),
   scan_reception_time_(ros::Time(0)),
-  laser_interface_name_(name + "_laser_descriptor"),
-  crossing_interface_name_(name + "_crossing_descriptor"),
+  laser_interface_name_(name + "_laser"),
+  crossing_interface_name_(name + "_crossing"),
   dissimilarity_server_name_("dissimilarity_server"),
   crossing_detector_(frontier_width, max_frontier_angle)
 {
@@ -258,17 +258,17 @@ void Jockey::onGetDissimilarity()
   server_.setSucceeded(result_);
 }
 
-lama_interfaces::DescriptorLink Jockey::laserDescriptorLink(const int32_t id)
+lama_msgs::DescriptorLink Jockey::laserDescriptorLink(const int32_t id)
 {
-  lama_interfaces::DescriptorLink descriptor_link;
+  lama_msgs::DescriptorLink descriptor_link;
   descriptor_link.descriptor_id = id;
   descriptor_link.interface_name = laser_interface_name_;
   return descriptor_link;
 }
 
-lama_interfaces::DescriptorLink Jockey::crossingDescriptorLink(const int32_t id)
+lama_msgs::DescriptorLink Jockey::crossingDescriptorLink(const int32_t id)
 {
-  lama_interfaces::DescriptorLink descriptor_link;
+  lama_msgs::DescriptorLink descriptor_link;
   descriptor_link.descriptor_id = id;
   descriptor_link.interface_name = crossing_interface_name_;
   return descriptor_link;
