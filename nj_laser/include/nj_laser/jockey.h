@@ -1,24 +1,29 @@
 /* Action server for the memory-less navigating jockey based on LaserScan.
  *
  * The role of this jockey is to travel to the next crossing.
- * The action is done when the robot reaches the crossing center.
+ * Implemented actions:
+ * - TRAVERSE: will start navigating to the next crossing (place with at least
+ *   three frontiers) and will succeed when the crossing center is reached.
+ * - STOP: will stop
+ * - INTERRUPT: same as CONTINUE
+ * - CONTINUE: same as TRAVERSE
  *
  * Interaction with the map:
  * - Getter: none
  * - Setter: none.
  *
  * Subscribers (other than map-related):
- * - sensor_msg::LaserScan, "~/base_scan", 360-deg laser-scan.
+ * - sensor_msg/LaserScan, "~/base_scan", 360-deg laser-scan.
  *
  * Publishers (other than map-related):
  * - visualization_msgs/Marker, "~crossing_marker", a sphere at the crossing center.
  * - visualization_msgs/Marker, "~exits_marker", lines from crossing center towards exits.
  * - geometry_msgs/Twist, "~cmd_vel", set velocity.
- * - lama_msgs/PlaceProfile, "~place_profile_cloud", PlaceProfile of the surroundings.
+ * - sensor_msgs/PointCloud, "~place_profile_cloud", profile of the surroundings.
  * - lama_msgs/Crossing, "~crossing", computed Crossing
  *
  * Parameters:
- * - ~max_frontier_distance, Float, NO_DEFAULT, points farther than this are cut are
+ * - ~max_frontier_distance, Float, NO_DEFAULT, points farther than this are cut and
  *     frontier may exist.
  * - ~robot_radius, Float, frontier_width/2, robot radius (frontier_width is
  *     a constructor parameter)

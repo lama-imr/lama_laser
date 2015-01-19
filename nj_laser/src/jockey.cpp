@@ -8,7 +8,7 @@ Jockey::Jockey(const std::string& name, const double frontier_width) :
   crossing_detector_(frontier_width),
   obstacle_avoider_(frontier_width / 2)
 {
-  private_nh_.getParamCached("max_frontier_distance", max_frontier_dist_);
+  private_nh_.getParam("max_frontier_distance", max_frontier_dist_);
   double robot_radius;
   if (private_nh_.getParam("robot_radius", robot_radius))
   {

@@ -20,6 +20,10 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
+# Although CGAL is not directly needed here, linking fails without
+# the following two lines.
+find_package(CGAL REQUIRED COMPONENTS Core)
+include(${CGAL_USE_FILE})
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
