@@ -24,11 +24,11 @@
  * - none.
  *
  * Parameters:
- * - ~robot_radius, Float, NO_DEFAULT, robot radius.
+ * - ~robot_radius, Float, NO_DEFAULT, robot radius (m).
  * - ~min_distance, Float, 2 * robot_width, if an obstacle is closer than this,
- *     turn and don't go forward (m/s).
+ *     turn and don't go forward (m).
  * - ~long_distance, Float, 5 * robot_width, if no obstacle within this
- *     distance, go straight (m/s).
+ *     distance, go straight (m).
  * - ~turnrate_collide, Float, 0.4, turn rate when obstacle closer than
  *     min_distance_ (rad/s).
  * - ~max_vel, Float, 1.0, linear velocity without obstacle (m/s).
