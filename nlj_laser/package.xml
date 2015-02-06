@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<package>
+  <name>nlj_laser</name>
+  <version>0.1.8</version>
+  <description>The nlj_laser package</description>
+
+  <maintainer email="kosnar@labe.felk.cvut.cz">Karel Košnar</maintainer>
+
+
+  <license>BSD</license>
+
+
+  <url type="website">http://wiki.ros.org/nlj_laser</url>
+  <url type="repository">https://github.com/lama-imr/lama_utilities.git</url>
+  <url type="bugtracker">https://github.com/lama-imr/lama_utilities/issues</url>
+
+
+  <author email="gael.ecorchard@ciirc.cvut.cz">Gaël Ecorchard</author>
+  <author email="kosnar@labe.felk.cvut.cz">Karel Košnar</author>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>lama_interfaces</build_depend>
+  <build_depend>lama_jockeys</build_depend>
+  <build_depend>lama_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>  
+  <build_depend>roscpp</build_depend>
+
+  <run_depend>lama_interfaces</run_depend>
+  <run_depend>lama_jockeys</run_depend>
+  <run_depend>lama_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+
+  <test_depend>python-nose</test_depend>
+
+
+  <export>
+  </export>
+</package>

@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>
+	<include file="$(find lama_interfaces)/launch/init_lama.launch" />
+
+	<test test-name="laser_interfaces" pkg="nlj_laser" type="test_nlj_laser_interfaces.py"
+		time-limit="5.0" />
+</launch>

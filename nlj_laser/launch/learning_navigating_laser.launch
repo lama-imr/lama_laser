@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<include file="$(find lama_interfaces)/launch/init_lama.launch" />
+
+	<node name="nlj_laser" pkg="nlj_laser" type="nlj_laser"
+			output="screen" />
+
+</launch>
