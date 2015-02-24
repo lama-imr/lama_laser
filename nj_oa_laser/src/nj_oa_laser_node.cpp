@@ -1,7 +1,5 @@
 #include <string>
 
-#include <ros/console.h>
-
 #include <nj_oa_laser/jockey.h>
 
 int main(int argc, char **argv)
@@ -9,12 +7,6 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "nj_oa_laser");
   ros::NodeHandle private_nh("~");
   
-  // Debug log level
-  if(ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug))
-  {
-    ros::console::notifyLoggerLevelsChanged();
-  }
-
   /* Compulsory parameter: robot radius */
   if (!private_nh.hasParam("robot_radius"))
   {
