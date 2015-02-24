@@ -29,7 +29,9 @@ Jockey::Jockey(std::string name, const double frontier_width, const double max_f
   dissimilarity_server_ = nh_.serviceClient<polygon_matcher::PolygonDissimilarity>(dissimilarity_server_name_);
 }
 
-/* Create the getter and setter services for LaserScan descriptors.
+/** Create the getter and setter services for LaserScan descriptors.
+ *
+ * @return true if interface initialization went fine.
  */
 bool Jockey::initMapLaserInterface()
 {
@@ -53,7 +55,9 @@ bool Jockey::initMapLaserInterface()
   return true;
 }
 
-/* Create the setter services for Crossing descriptors.
+/** Create the setter services for Crossing descriptors.
+ *
+ * @return true if interface initialization went fine.
  */
 bool Jockey::initMapCrossingInterface()
 {
@@ -75,7 +79,7 @@ bool Jockey::initMapCrossingInterface()
   return true;
 }
 
-/* Start the subscriber, wait for a LaserScan and exit upon reception.
+/** Start the subscriber, wait for a LaserScan and exit upon reception.
  */
 void Jockey::getData()
 {
@@ -96,7 +100,7 @@ void Jockey::getData()
   }
 }
 
-/* Receive a LaserScan message and store it.
+/** Receive a LaserScan message and store it.
  */
 void Jockey::handleLaser(const sensor_msgs::LaserScanConstPtr& msg)
 {
@@ -105,7 +109,7 @@ void Jockey::handleLaser(const sensor_msgs::LaserScanConstPtr& msg)
   data_received_ = true;
 }
 
-/* Return the vertex descriptors associated with the current robot position through result_.
+/** Return the vertex descriptors associated with the current robot position through result_.
  *
  * The descriptor are a LaserScan and a Crossing.
  */
@@ -258,6 +262,10 @@ void Jockey::onGetDissimilarity()
   server_.setSucceeded(result_);
 }
 
+/** Return a DescriptorLink for LaserScan.
+ *
+ * @return DescriptorLink with correct interface_name and id
+ */
 lama_msgs::DescriptorLink Jockey::laserDescriptorLink(const int32_t id)
 {
   lama_msgs::DescriptorLink descriptor_link;
@@ -266,6 +274,10 @@ lama_msgs::DescriptorLink Jockey::laserDescriptorLink(const int32_t id)
   return descriptor_link;
 }
 
+/** Return a DescriptorLink for Crossing.
+ *
+ * @return DescriptorLink with correct interface_name and id
+ */
 lama_msgs::DescriptorLink Jockey::crossingDescriptorLink(const int32_t id)
 {
   lama_msgs::DescriptorLink descriptor_link;

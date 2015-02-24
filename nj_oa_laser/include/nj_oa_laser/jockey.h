@@ -76,7 +76,7 @@ class Jockey : public lama_jockeys::NavigatingJockey
     void handleLaser(const sensor_msgs::LaserScanConstPtr& msg);
 
     // Internals.
-    TwistHandler twist_handler_;  //!> To compute the twist from a LaserScan.
+    TwistHandler twist_handler_;  //!< To compute the twist from a LaserScan.
 
 };
 

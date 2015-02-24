@@ -61,9 +61,11 @@ void Jockey::onTraverse()
   ros::Subscriber laser_handler = private_nh_.subscribe<sensor_msgs::LaserScan>("base_scan", 1, &Jockey::handleLaser, this);
   pub_twist_ = private_nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
   
+  // Loop until the goal is preempted.
   ros::Rate r(100);
   while (ros::ok())
   {
+    ros::spinOnce();
     if (server_.isPreemptRequested() && !ros::ok())
     {
       ROS_INFO("%s: Preempted", jockey_name_.c_str());
@@ -72,7 +74,6 @@ void Jockey::onTraverse()
       break;
     }
 
-    ros::spinOnce();
     r.sleep();
   }
 
@@ -81,7 +82,7 @@ void Jockey::onTraverse()
 
 void Jockey::onStop()
 {
-  ROS_DEBUG("%s: Received action STOP or INTERRUPT", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action STOP or INTERRUPT");
   result_.final_state = lama_jockeys::NavigateResult::DONE;
   result_.completion_time = ros::Duration(0.0);
   server_.setSucceeded(result_);
@@ -89,13 +90,13 @@ void Jockey::onStop()
 
 void Jockey::onInterrupt()
 {
-  ROS_DEBUG("%s: Received action INTERRUPT", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action INTERRUPT");
   onStop();
 }
 
 void Jockey::onContinue()
 {
-  ROS_DEBUG("%s: Received action CONTINUE", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action CONTINUE");
   onTraverse();
 }
 

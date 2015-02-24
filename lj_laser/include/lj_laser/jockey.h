@@ -80,18 +80,20 @@ class Jockey : public lama_jockeys::LocalizingJockey
 
     // Reception and storage of LaserScan.
     ros::Subscriber laserHandler_;
-    ros::Time scan_reception_time_;
-    sensor_msgs::LaserScan scan_;
+    ros::Time scan_reception_time_; //!< Time of reception of last received laser scan.
+    sensor_msgs::LaserScan scan_; //!< Last received laser scan.
 
+    // ROS parameters.
+    std::string laser_interface_name_; //!< Interface name in the database, access via "~laser_interface_name".
+    std::string crossing_interface_name_; //!< Interface name in the database, access via "~crossing_interface_name".
+    std::string dissimilarity_server_name_; //!< Service name, access via "~dissimilarity_server_name".
+    
     // Reception and Sending of LaserScan and Crossing descriptors.
-    std::string laser_interface_name_;
-    ros::ServiceClient laser_descriptor_getter_;
-    ros::ServiceClient laser_descriptor_setter_;
-    std::string crossing_interface_name_;
+    ros::ServiceClient laser_descriptor_getter_; //!< Client to laser scan getter for LaMa.
+    ros::ServiceClient laser_descriptor_setter_; //!< Client to laser scan setter for LaMa.
     ros::ServiceClient crossing_descriptor_setter_;
 
     // Dissimilarity server.
-    std::string dissimilarity_server_name_;
     ros::ServiceClient dissimilarity_server_;
 
     crossing_detector::LaserCrossingDetector crossing_detector_;

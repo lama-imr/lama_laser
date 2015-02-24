@@ -36,7 +36,8 @@
 
 #include <lj_laser/jockey.h>
 
-namespace lj_laser_heading {
+namespace lj_laser_heading
+{
 
 class Jockey : public lj_laser::Jockey
 {
@@ -59,10 +60,10 @@ class Jockey : public lj_laser::Jockey
     ros::Subscriber poseHandler_;
     ros::Subscriber odomHandler_;
     ros::Time heading_reception_time_;
-    double heading_;  //!> Heading information read from Pose or Odometry.
+    double heading_;  //!< Heading information read from Pose or Odometry.
 
     // Hard-coded parameters.
-    const static ros::Duration max_data_time_delta_;  //!> Max time interval between reception of scan_ and heading_.
+    const static ros::Duration max_data_time_delta_;  //!< Max time interval between reception of scan_ and heading_.
 };
 
 } // namespace lj_laser_heading

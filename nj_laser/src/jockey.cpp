@@ -1,6 +1,7 @@
 #include <nj_laser/jockey.h>
 
-namespace nj_laser {
+namespace nj_laser
+{
 
 Jockey::Jockey(const std::string& name, const double frontier_width) :
   lama_jockeys::NavigatingJockey(name),

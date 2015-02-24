@@ -1,6 +1,7 @@
 #include <lj_laser_heading/jockey.h>
 
-namespace lj_laser_heading {
+namespace lj_laser_heading
+{
 
 // Maximum time interval between reception of LaserScan and heading (either as
 // Pose or Odoometry), whichever comes first. The jockey will reject all data

@@ -42,7 +42,8 @@
 
 #include <nj_laser/visualization.h>
 
-namespace nj_laser {
+namespace nj_laser
+{
 
 class Jockey : public lama_jockeys::NavigatingJockey
 {
@@ -72,11 +73,11 @@ class Jockey : public lama_jockeys::NavigatingJockey
 
     // Internals.
     bool has_crossing_;
-    sensor_msgs::LaserScan scan_;  //!> Last received laser scan.
-    lama_msgs::Crossing crossing_;  //!> Crossing descriptor from LaserScan.
+    sensor_msgs::LaserScan scan_;  //!< Last received laser scan.
+    lama_msgs::Crossing crossing_;  //!< Crossing descriptor from LaserScan.
     crossing_detector::LaserCrossingDetector crossing_detector_;
     goto_crossing::CrossingGoer crossing_goer_;
-    nj_oa_laser::TwistHandler obstacle_avoider_;  //!> Twist computation for obstacle avoidance.
+    nj_oa_laser::TwistHandler obstacle_avoider_;  //!< Twist computation for obstacle avoidance.
 };
 
 } // namespace nj_laser
