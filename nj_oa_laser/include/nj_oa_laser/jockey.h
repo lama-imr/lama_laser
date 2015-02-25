@@ -51,7 +51,8 @@
 
 #include <nj_oa_laser/twist_handler.h>
 
-namespace nj_oa_laser {
+namespace nj_oa_laser
+{
 
 class Jockey : public lama_jockeys::NavigatingJockey
 {

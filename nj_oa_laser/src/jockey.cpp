@@ -1,6 +1,7 @@
 #include <nj_oa_laser/jockey.h>
 
-namespace nj_oa_laser {
+namespace nj_oa_laser
+{
 
 Jockey::Jockey(const std::string& name, const double robot_radius) :
   lama_jockeys::NavigatingJockey(name),
@@ -11,10 +12,10 @@ Jockey::Jockey(const std::string& name, const double robot_radius) :
 
 void Jockey::initTwistHandlerParam(TwistHandler& twist_handler)
 {
-  double robot_radius_;
-  if (private_nh_.getParam("robot_radius", robot_radius_))
+  double robot_radius;
+  if (private_nh_.getParam("robot_radius", robot_radius))
   {
-    twist_handler.robot_radius = robot_radius_;
+    twist_handler.robot_radius = robot_radius;
   }
 
   double min_distance;
