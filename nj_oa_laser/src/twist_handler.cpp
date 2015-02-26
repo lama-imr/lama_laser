@@ -8,9 +8,10 @@ TwistHandler::TwistHandler(const double robot_radius) :
   min_distance(1.5 * robot_radius),
   long_distance(5 * robot_radius),
   turnrate_collide(0.4),
-  max_vel(1.0),
   vel_close_obstacle(0.5),
-  turnrate_factor(0.9)
+  turnrate_factor(0.9),
+  max_linear_velocity(1),
+  max_angular_velocity(1)
 {
 }
 
@@ -34,7 +35,7 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
    double sum_y = 0;
    unsigned int count_y = 0;
    double sum_y_colliding = 0;
-   const double long_radius = 1.5 * robot_radius;
+   const double long_radius = 1.2 * robot_radius;
 
    double x;
    double y;
@@ -43,7 +44,7 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      const double angle = angles::normalize_angle(scan.angle_min + i * scan.angle_increment);
      if ((angle < -M_PI_2) || (angle > M_PI_2))
      {
-       // Do no consider a beam directed backward.
+       // Do no consider a beam directed backwards.
        continue;
      }
 
@@ -70,6 +71,7 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      count_y++;
    }
 
+   // Corner detection.
    const bool force_turn_left = (count_distance_front > 0) &&
      (sum_distance_front / count_distance_front < 2 * min_distance);
 
@@ -92,13 +94,22 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
    }
    else if (go_straight)
    {
-     twist.linear.x = max_vel;
+     twist.linear.x = max_linear_velocity;
      twist.angular.z = 0;
    }
    else
    {
      twist.linear.x = vel_close_obstacle;
      twist.angular.z = turnrate_factor * sum_y / ((double) count_y);
+   }
+
+   if (twist.angular.z < -max_angular_velocity)
+   {
+     twist.angular.z = -max_angular_velocity;
+   }
+   else if (twist.angular.z > max_angular_velocity)
+   {
+     twist.angular.z = max_angular_velocity;
    }
 
    return twist;

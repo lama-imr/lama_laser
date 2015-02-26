@@ -25,7 +25,7 @@ Jockey::Jockey(const std::string& name, const double frontier_width) :
 
 void Jockey::onTraverse()
 {
-  ROS_DEBUG("%s: Received action TRAVERSE or CONTINUE", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action TRAVERSE or CONTINUE");
   crossing_goer_.resetIntegrals();
 
   laserHandler_ = private_nh_.subscribe<sensor_msgs::LaserScan>("base_scan", 1, &Jockey::handleLaser, this);
@@ -63,7 +63,7 @@ void Jockey::onTraverse()
           break;
         }
       }
-      ROS_DEBUG("%s: twist (%.3f, %.3f)", ros::this_node::getName().c_str(), twist.linear.x, twist.angular.z);
+      ROS_DEBUG("Twist (%.3f, %.3f)", twist.linear.x, twist.angular.z);
       has_crossing_ = false;
     }
     ros::spinOnce();
@@ -74,7 +74,7 @@ void Jockey::onTraverse()
 
 void Jockey::onStop()
 {
-  ROS_DEBUG("%s: Received action STOP or INTERRUPT", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action STOP or INTERRUPT");
   laserHandler_.shutdown();
   result_.final_state = lama_jockeys::NavigateResult::DONE;
   result_.completion_time = ros::Duration(0.0);
@@ -83,24 +83,24 @@ void Jockey::onStop()
 
 void Jockey::onInterrupt()
 {
-  ROS_DEBUG("%s: Received action INTERRUPT", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action INTERRUPT");
   onStop();
 }
 
 void Jockey::onContinue()
 {
-  ROS_DEBUG("%s: Received action CONTINUE", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action CONTINUE");
   onTraverse();
 }
 
 void Jockey::handleLaser(const sensor_msgs::LaserScanConstPtr& msg)
 {
-  ROS_DEBUG("%s: laser arrived with %zu beams", ros::this_node::getName().c_str(), msg->ranges.size());
+  ROS_DEBUG("Laser arrived with %zu beams", msg->ranges.size());
 
   scan_ = *msg;
   crossing_detector_.setMaxFrontierDistance(max_frontier_dist_);
   crossing_ = crossing_detector_.crossingDescriptor(scan_);
-  ROS_DEBUG("%s: crossing (%.3f, %.3f, %.3f), number of exits: %zu", ros::this_node::getName().c_str(),
+  ROS_DEBUG("Crossing (%.3f, %.3f, %.3f), number of exits: %zu",
         crossing_.center.x, crossing_.center.y, crossing_.radius, crossing_.frontiers.size());
 
   has_crossing_ = true;

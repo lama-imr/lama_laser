@@ -12,52 +12,19 @@ Jockey::Jockey(const std::string& name, const double robot_radius) :
 
 void Jockey::initTwistHandlerParam(TwistHandler& twist_handler)
 {
-  double robot_radius;
-  if (private_nh_.getParam("robot_radius", robot_radius))
-  {
-    twist_handler.robot_radius = robot_radius;
-  }
-
-  double min_distance;
-  if (private_nh_.getParam("min_distance", min_distance))
-  {
-    twist_handler.min_distance = min_distance;
-  }
-
-  double long_distance;
-  if (private_nh_.getParam("long_distance", long_distance))
-  {
-    twist_handler.long_distance = long_distance;
-  }
-  
-  double turnrate_collide;
-  if (private_nh_.getParam("turnrate_collide", turnrate_collide))
-  {
-    twist_handler.turnrate_collide = turnrate_collide;
-  }
-
-  double max_vel;
-  if (private_nh_.getParam("max_vel", max_vel))
-  {
-    twist_handler.max_vel = max_vel;
-  }
-
-  double vel_close_obstacle;
-  if (private_nh_.getParam("vel_close_obstacle", vel_close_obstacle))
-  {
-    twist_handler.vel_close_obstacle = vel_close_obstacle;
-  }
-
-  double turnrate_factor;
-  if (private_nh_.getParam("turnrate_factor", turnrate_factor))
-  {
-    twist_handler.turnrate_factor = turnrate_factor;
-  }
+  private_nh_.getParam("robot_radius", twist_handler.robot_radius);
+  private_nh_.getParam("min_distance", twist_handler.min_distance);
+  private_nh_.getParam("long_distance", twist_handler.long_distance);
+  private_nh_.getParam("turnrate_collide", twist_handler.turnrate_collide);
+  private_nh_.getParam("vel_close_obstacle", twist_handler.vel_close_obstacle);
+  private_nh_.getParam("turnrate_factor", twist_handler.turnrate_factor);
+  private_nh_.getParam("max_linear_velocity", twist_handler.max_linear_velocity);
+  private_nh_.getParam("max_angular_velocity", twist_handler.max_angular_velocity);
 }
 
 void Jockey::onTraverse()
 {
-  ROS_DEBUG("%s: Received action TRAVERSE or CONTINUE", ros::this_node::getName().c_str());
+  ROS_DEBUG("Received action TRAVERSE or CONTINUE");
 
   ros::Subscriber laser_handler = private_nh_.subscribe<sensor_msgs::LaserScan>("base_scan", 1, &Jockey::handleLaser, this);
   pub_twist_ = private_nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);

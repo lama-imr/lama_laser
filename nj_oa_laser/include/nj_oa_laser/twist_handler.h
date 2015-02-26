@@ -23,10 +23,11 @@ class TwistHandler
     double min_distance;  //!< (m), if an obstacle is closer (y-direction) than this, turn and don't go forward.
     double long_distance;  //!< (m), if no obstacle within this distance, go straight.
     double turnrate_collide;  //!< (rad/s), turn rate when obstacle closer than min_distance.
-    double max_vel;  //!< (m/s), linear velocity without obstacle.
     double vel_close_obstacle;  //!< (m/s), linear velocity if obstacle between min_distance and long_distance.
     double turnrate_factor;  //!< (rad.m^-1.s^-1, > 0), if obstacle closer than long_distance,
                              //!< turnrate = -turnrate_factor * mean(lateral_position_of_obstacle).
+    double max_linear_velocity;  //!< Linear velocity in x-direction without obstacle (m/s).
+    double max_angular_velocity;  //!< Max angular velocity around z (rad/s).
 };
 
 } // namespace nj_oa_laser
