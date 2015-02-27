@@ -23,7 +23,7 @@
  * - lama_msgs/Crossing, "~crossing", computed Crossing
  *
  * Parameters:
- * - ~max_frontier_distance, Float, NO_DEFAULT, points farther than this are cut and
+ * - ~range_cutoff, Float, NO_DEFAULT, points farther than this are cut and
  *     frontier may exist.
  * - ~robot_radius, Float, frontier_width/2, robot radius (frontier_width is
  *     a constructor parameter)
@@ -69,7 +69,7 @@ class Jockey : public lama_jockeys::NavigatingJockey
     ros::Publisher pub_crossing_;
 
     // Parameters shown outside.
-    double max_frontier_dist_;
+    double range_cutoff_;
 
     // Internals.
     bool has_crossing_;

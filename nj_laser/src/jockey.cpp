@@ -9,7 +9,7 @@ Jockey::Jockey(const std::string& name, const double frontier_width) :
   crossing_detector_(frontier_width),
   obstacle_avoider_(frontier_width / 2)
 {
-  private_nh_.getParam("max_frontier_distance", max_frontier_dist_);
+  private_nh_.getParam("range_cutoff", range_cutoff_);
   double robot_radius;
   if (private_nh_.getParam("robot_radius", robot_radius))
   {
@@ -98,7 +98,7 @@ void Jockey::handleLaser(const sensor_msgs::LaserScanConstPtr& msg)
   ROS_DEBUG("Laser arrived with %zu beams", msg->ranges.size());
 
   scan_ = *msg;
-  crossing_detector_.setMaxFrontierDistance(max_frontier_dist_);
+  crossing_detector_.setMaxFrontierDistance(range_cutoff_);
   crossing_ = crossing_detector_.crossingDescriptor(scan_);
   ROS_DEBUG("Crossing (%.3f, %.3f, %.3f), number of exits: %zu",
         crossing_.center.x, crossing_.center.y, crossing_.radius, crossing_.frontiers.size());
