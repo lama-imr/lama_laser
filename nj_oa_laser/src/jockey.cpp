@@ -20,6 +20,9 @@ void Jockey::initTwistHandlerParam(TwistHandler& twist_handler)
   private_nh_.getParam("turnrate_factor", twist_handler.turnrate_factor);
   private_nh_.getParam("max_linear_velocity", twist_handler.max_linear_velocity);
   private_nh_.getParam("max_angular_velocity", twist_handler.max_angular_velocity);
+  private_nh_.getParam("short_lateral_distance", twist_handler.short_lateral_distance);
+  private_nh_.getParam("long_lateral_distance", twist_handler.long_lateral_distance);
+  private_nh_.getParam("force_turn_left_factor", twist_handler.force_turn_left_factor);
 }
 
 void Jockey::onTraverse()

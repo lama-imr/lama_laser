@@ -22,6 +22,11 @@ class TwistHandler
     double robot_radius;  //!< (m), robot radius.
     double min_distance;  //!< (m), if an obstacle is closer (y-direction) than this, turn and don't go forward.
     double long_distance;  //!< (m), if no obstacle within this distance, go straight.
+    double short_lateral_distance;  //!< If obstacle within this lateral distance, turn and don't go forward (m)
+    double long_lateral_distance;  //!< If no obstacle within this lateral distance, go straight (m).
+    double force_turn_left_factor;  //!< If the mean obstacle distance is smaller that this factor times
+                                    //!< min_distance, force a left turn to avoid oscillating in front of a
+                                    //!< corner.
     double turnrate_collide;  //!< (rad/s), turn rate when obstacle closer than min_distance.
     double vel_close_obstacle;  //!< (m/s), linear velocity if obstacle between min_distance and long_distance.
     double turnrate_factor;  //!< (rad.m^-1.s^-1, > 0), if obstacle closer than long_distance,

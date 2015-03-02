@@ -25,10 +25,17 @@
  *
  * Parameters:
  * - ~robot_radius, Float, NO_DEFAULT, robot radius (m).
- * - ~min_distance, Float, 2 * robot_width, if an obstacle is closer than this,
+ * - ~min_distance, Float, 2 * robot_radius, if an obstacle is closer than this,
  *     turn and don't go forward (m).
- * - ~long_distance, Float, 5 * robot_width, if no obstacle within this
+ * - ~long_distance, Float, 5 * robot_radius, if no obstacle within this
  *     distance, go straight (m).
+ * - ~short_lateral_distance, Float, 2 * robot_radius, if obstacle within
+ *     this lateral distance, turn and don't go forward (m).
+ * - ~long_lateral_distance, Float, 3 * robot_radius, if no obstacle within
+ *     this lateral distance, go straight (m).
+ * - ~force_turn_left_factor, Float, 3, if the mean obstacle distance is
+ *     smaller that this factor times min_distance, force a left turn to avoid
+ *     oscillating in front of a corner.
  * - ~turnrate_collide, Float, 0.4, turn rate when obstacle closer than
  *     min_distance_ (rad/s).
  * - ~max_vel, Float, 1.0, linear velocity without obstacle (m/s).

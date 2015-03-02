@@ -1,5 +1,7 @@
 #include <nj_oa_laser/twist_handler.h>
 
+#include <ros/ros.h>
+
 namespace nj_oa_laser
 {
 
@@ -7,6 +9,9 @@ TwistHandler::TwistHandler(const double robot_radius) :
   robot_radius(robot_radius),
   min_distance(1.5 * robot_radius),
   long_distance(5 * robot_radius),
+  short_lateral_distance(2 * robot_radius),
+  long_lateral_distance(1.5 * short_lateral_distance),
+  force_turn_left_factor(3),
   turnrate_collide(0.4),
   vel_close_obstacle(0.5),
   turnrate_factor(0.9),
@@ -35,7 +40,6 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
    double sum_y = 0;
    unsigned int count_y = 0;
    double sum_y_colliding = 0;
-   const double long_radius = 1.2 * robot_radius;
 
    double x;
    double y;
@@ -57,13 +61,13 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      x = scan.ranges[i] * std::cos(angle);
      y = scan.ranges[i] * std::sin(angle);
 
-     if ((x < min_distance)  && (-robot_radius < y) && (y < robot_radius))
+     if ((x < min_distance)  && (-short_lateral_distance < y) && (y < short_lateral_distance))
      {
        collide = true;
        sum_y_colliding += y;   
      } 
 
-     if ((x < long_distance)  && (-long_radius < y) && (y < robot_radius))
+     if ((x < long_distance) && (-long_lateral_distance < y) && (y < long_lateral_distance))
      {
        go_straight = false;
      }
@@ -73,12 +77,14 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
 
    // Corner detection.
    const bool force_turn_left = (count_distance_front > 0) &&
-     (sum_distance_front / count_distance_front < 2 * min_distance);
+     (sum_distance_front / count_distance_front < force_turn_left_factor * min_distance);
 
    geometry_msgs::Twist twist;
    if (force_turn_left)
    {
      twist.angular.z = turnrate_collide;
+     ROS_DEBUG("Mean dist to obstacle within %.3f, force left turn",
+         force_turn_left_factor * min_distance);
    }
    else if (collide)
    { 
@@ -86,21 +92,25 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      if (sum_y_colliding < 0)
      { 
        twist.angular.z = turnrate_collide;
+       ROS_DEBUG("Obstacle on the left, turn right");
      }
      else
      {
        twist.angular.z = -turnrate_collide;
+       ROS_DEBUG("Obstacle on the right, turn left");
      }      
    }
    else if (go_straight)
    {
      twist.linear.x = max_linear_velocity;
      twist.angular.z = 0;
+     ROS_DEBUG("No obstacle");
    }
    else
    {
      twist.linear.x = vel_close_obstacle;
      twist.angular.z = turnrate_factor * sum_y / ((double) count_y);
+     ROS_DEBUG("Obstacle seen within %.3f, %.3f",  long_distance, long_lateral_distance);
    }
 
    if (twist.angular.z < -max_angular_velocity)
