@@ -113,6 +113,15 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      ROS_DEBUG("Obstacle seen within %.3f, %.3f",  long_distance, long_lateral_distance);
    }
 
+   if (twist.linear.x < -max_linear_velocity)
+   {
+     twist.linear.x = -max_linear_velocity;
+   }
+   else if (twist.linear.x > max_linear_velocity)
+   {
+     twist.linear.x = max_linear_velocity;
+   }
+
    if (twist.angular.z < -max_angular_velocity)
    {
      twist.angular.z = -max_angular_velocity;
