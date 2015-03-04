@@ -39,10 +39,14 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
    unsigned int count_distance_front = 0;
    double sum_y = 0;
    unsigned int count_y = 0;
-   double sum_y_colliding = 0;
+   double integral_collide = 0;
 
    double x;
    double y;
+   // Start and end values for the integral in collide rectangle.
+   double previous_x_yplus = min_distance;
+   double previous_x_yminus = 0;
+
    for (unsigned int i = 0; i < scan.ranges.size(); ++i)
    {
      const double angle = angles::normalize_angle(scan.angle_min + i * scan.angle_increment);
@@ -61,10 +65,37 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      x = scan.ranges[i] * std::cos(angle);
      y = scan.ranges[i] * std::sin(angle);
 
-     if ((x < min_distance)  && (-short_lateral_distance < y) && (y < short_lateral_distance))
+     if (x < min_distance)
      {
-       collide = true;
-       sum_y_colliding += y;   
+       if ((-short_lateral_distance < y) && (y < short_lateral_distance))
+       {
+         if (y > 0)
+         {
+           integral_collide += y * (previous_x_yplus - x); 
+           previous_x_yplus = x;
+         }
+         else
+         {
+           integral_collide += y * (x - previous_x_yminus); 
+           previous_x_yminus = x;
+         }
+         collide = true;
+       }
+       else
+       {
+         // Front distance is short, lateral distance is large.
+         // Add the cut distance to the integral.
+         if (y > 0)
+         {
+           integral_collide += short_lateral_distance * (previous_x_yplus - x);
+           previous_x_yplus = x;
+         }
+         else
+         {
+           integral_collide -= short_lateral_distance * (x - previous_x_yminus);
+           previous_x_yminus = x;
+         }
+       }
      } 
 
      if ((x < long_distance) && (-long_lateral_distance < y) && (y < long_lateral_distance))
@@ -74,6 +105,10 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
      sum_y += y;
      count_y++;
    }
+
+   // Complete the integral.
+   integral_collide += short_lateral_distance * previous_x_yplus;
+   integral_collide -= short_lateral_distance * (min_distance - previous_x_yminus);
 
    // Corner detection.
    const bool force_turn_left = (count_distance_front > 0) &&
@@ -89,8 +124,9 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
    else if (collide)
    { 
      twist.linear.x = 0;
-     if (sum_y_colliding > 0)
+     if (integral_collide > 0)
      { 
+       // Obstacle distance is larger, i.e. space is more free, go there.
        twist.angular.z = turnrate_collide;
        ROS_DEBUG("Obstacle on the right, turn left");
      }
