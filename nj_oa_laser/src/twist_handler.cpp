@@ -89,15 +89,15 @@ geometry_msgs::Twist TwistHandler::getTwist(const sensor_msgs::LaserScan& scan)
    else if (collide)
    { 
      twist.linear.x = 0;
-     if (sum_y_colliding < 0)
+     if (sum_y_colliding > 0)
      { 
        twist.angular.z = turnrate_collide;
-       ROS_DEBUG("Obstacle on the left, turn right");
+       ROS_DEBUG("Obstacle on the right, turn left");
      }
      else
      {
        twist.angular.z = -turnrate_collide;
-       ROS_DEBUG("Obstacle on the right, turn left");
+       ROS_DEBUG("Obstacle on the left, turn right");
      }      
    }
    else if (go_straight)
