@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   lama_interfaces
   lama_jockeys
   lama_msgs
-  polygon_matcher
+  place_matcher_msgs
   roscpp
   sensor_msgs
 )
@@ -111,7 +111,7 @@ catkin_package(
   lama_interfaces
   lama_jockeys
   lama_msgs
-  polygon_matcher
+  place_matcher_msgs
   roscpp
   sensor_msgs
 

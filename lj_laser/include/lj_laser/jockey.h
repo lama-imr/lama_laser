@@ -26,7 +26,7 @@
  *
  * Services used (other than map-related):
  * - service type, server default name, description
- * - polygon_matcher::PolygonDissimilarity, "~/compute_dissimilarity", used to
+ * - place_matcher_msgs::PolygonDissimilarity, "~/compute_dissimilarity", used to
  *    compare all known places with the current place
  *
  * Parameters:
@@ -52,7 +52,7 @@
 #include <lama_msgs/DescriptorLink.h>
 #include <lama_msgs/SetCrossing.h>
 #include <lama_jockeys/localizing_jockey.h>
-#include <polygon_matcher/PolygonDissimilarity.h>
+#include <place_matcher_msgs/PolygonDissimilarity.h>
 
 #include <crossing_detector/laser_crossing_detector.h>
 
