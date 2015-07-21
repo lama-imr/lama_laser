@@ -36,15 +36,16 @@
  * - dissimilarity_server_name, String, "compute_dissimilarity", name of the dissimilarity server.
  */
 
-#ifndef _LJ_LASER_JOCKEY_H_
-#define _LJ_LASER_JOCKEY_H_
+#pragma once
+#ifndef LJ_LASER_JOCKEY_H
+#define LJ_LASER_JOCKEY_H
 
 #include <cmath>
 
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 
-#include <lama_common/polygon.h>  // for scanToPolygon
+#include <lama_common/polygon_utils.h>  // for scanToPolygon
 #include <lama_interfaces/ActOnMap.h>
 #include <lama_interfaces/AddInterface.h>
 #include <lama_interfaces/GetVectorLaserScan.h>
@@ -56,7 +57,8 @@
 
 #include <crossing_detector/laser_crossing_detector.h>
 
-namespace lj_laser {
+namespace lj_laser
+{
 
 class Jockey : public lama_jockeys::LocalizingJockey
 {
@@ -112,4 +114,4 @@ class Jockey : public lama_jockeys::LocalizingJockey
 
 } // namespace lj_laser
 
-#endif // _LJ_LASER_JOCKEY_H_
+#endif // LJ_LASER_JOCKEY_H
