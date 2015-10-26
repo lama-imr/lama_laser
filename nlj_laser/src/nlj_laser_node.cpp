@@ -27,7 +27,7 @@ int main(int argc, char **argv)
   ROS_DEBUG("setting descriptor services");
   lama_interfaces::AddInterface srv;
   srv.request.interface_name = "laser_descriptor";
-  srv.request.interface_type = lama_interfaces::AddInterfaceRequest::CLEARTEXT;
+  srv.request.interface_type = lama_interfaces::AddInterfaceRequest::SERIALIZED;
   srv.request.get_service_message = "nlj_laser/GetLaserDescriptor";
   srv.request.set_service_message = "nlj_laser/SetLaserDescriptor";
   ROS_DEBUG("setting descriptor services ....");
